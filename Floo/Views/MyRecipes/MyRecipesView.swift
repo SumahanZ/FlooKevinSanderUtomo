@@ -13,15 +13,17 @@ struct MyRecipesView: View {
             HStack{
             Text("My Recipes")
                 .font(.largeTitle)
+                .fontWeight(.bold)
                 .multilineTextAlignment(.leading)
                 .padding(.leading)
             Spacer()
             }
+            ScrollView {
             VStack{
                 HStack{
                     Text("Favorites")
                         .font(.title)
-                    .fontWeight(.semibold)
+                        .fontWeight(.medium)
                     .padding([.top, .leading])
                 Spacer()
                 }
@@ -38,7 +40,7 @@ struct MyRecipesView: View {
                 HStack{
                     Text("Saved Recipes")
                         .font(.title)
-                    .fontWeight(.semibold)
+                        .fontWeight(.medium)
                     .padding([.top, .leading])
                 Spacer()
                 }
@@ -53,7 +55,6 @@ struct MyRecipesView: View {
             }
             
             Button("Add Recipe") {
-                
             }
             .padding(.all, 15.0)
             .frame(width: 350.0)
@@ -62,12 +63,10 @@ struct MyRecipesView: View {
             .cornerRadius(10)
             
             
-    
-            
-
             Spacer()
         }
         
+    }
     }
 }
 

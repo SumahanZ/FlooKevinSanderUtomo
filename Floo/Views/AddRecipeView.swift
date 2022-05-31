@@ -132,8 +132,10 @@ struct AddRecipeView: View {
                         }
                         
                     }
-                    Button("Add More Ingredients") {
+                    Button{
                         
+                    }label : {
+                        Text("Add More Ingredients")
                     }
                     .padding(.all, 15.0)
                     .frame(maxWidth: 240, alignment: .center)

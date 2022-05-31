@@ -8,28 +8,27 @@
 import SwiftUI
 
 struct RecipeDetailView: View {
+    
+    @StateObject var viewModel = RecipeDetailViewmodel()
+    
+    var id:Int
+    
     var body: some View {
-        VStack {
-            HStack {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(.purple)
-                Text("Back")
-                    .fontWeight(.light)
-                    .padding(.leading, -5.0)
-            }
-            .padding(.leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
         ScrollView {
         VStack {
-            Image("sushiroll")
-                .resizable()
-                .padding(.top, 0.0)
-                .frame(height: nil)
-                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
-                .cornerRadius(25)
-            
+            AsyncImage(url: URL(string: viewModel.recipe.image ?? "")) { image in
+                image
+                    .resizable()
+                    .frame(height: nil)
+                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(20)
+                    .padding(5)
+            } placeholder: {
+                ProgressView()
+            }
+          
             HStack{
-                Text("Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs")
+                Text(viewModel.recipe.title ?? "None")
                     .font(.system(size: 24))
                     .fontWeight(.bold)
                     .padding([.top, .leading])
@@ -38,11 +37,12 @@ struct RecipeDetailView: View {
                     
                 Image(systemName: "heart.fill")
                     .foregroundColor(.red)
-                    .padding(.trailing)
+                    .padding(.trailing, 20)
+                    .padding(.top)
                     .frame(width: 30.0, height: 30.0)
             }
             
-            Text("This is a great low-fat pasta dish. I serve it to company all the time. Serve with a fruit salad and French bread. ")
+            Text(viewModel.recipe.summary ?? "None")
                 .font(.body)
                 .fontWeight(.light)
                 .multilineTextAlignment(.leading)
@@ -59,7 +59,7 @@ struct RecipeDetailView: View {
             VStack {
                 HStack {
                     HStack {
-                        Text("200")
+                        Text(String(format: "%.2f",viewModel.recipe.nutrition?.nutrients?[0].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
@@ -79,7 +79,7 @@ struct RecipeDetailView: View {
                     
                     
                     HStack {
-                        Text("47")
+                        Text(String(format: "%.2f", viewModel.recipe.nutrition?.nutrients?[3].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
@@ -100,7 +100,7 @@ struct RecipeDetailView: View {
                 .foregroundColor(.white)
                 HStack {
                     HStack {
-                        Text("758")
+                        Text(String(format: "%.2f",viewModel.recipe.nutrition?.nutrients?[8].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
@@ -119,11 +119,11 @@ struct RecipeDetailView: View {
                     
                     
                     HStack {
-                        Text("467")
+                        Text(String(format: "%.2f", viewModel.recipe.nutrition?.nutrients?[1].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
-                            Text("Calcium")
+                            Text("Fat")
                                 .fontWeight(.bold)
                             Text("Gram")
                                 .font(.body)
@@ -145,24 +145,24 @@ struct RecipeDetailView: View {
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack {
+                ForEach(viewModel.recipe.extendedIngredients ?? [ExtendedIngredient]()) {ingredient in
+                    Text(ingredient.original ?? "")
+                }
                 
-                Text("1. 1/2 cup grated Parmesan Cheese")
-                Text("2. 1/2 teaspoon crushed red pepper")
-                Text("4. 1/2 cup grated Parmesan Cheese")
-                Text("5. 1/2 cup grated Parmesan Cheese")
-                Text("6. 1/2 cup grated Parmesan Cheese")
             }
             .padding([.top, .leading, .trailing], 5.0)
             .frame(maxWidth: .infinity, alignment: .center)
                 
         }
         }
+        .onAppear {
+            viewModel.fetchRecipe(recipeId: id)
+        }
         }
     }
-}
 
 struct RecipeDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetailView()
+        RecipeDetailView(id: 187)
     }
 }

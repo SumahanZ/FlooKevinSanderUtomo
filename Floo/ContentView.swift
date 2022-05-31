@@ -9,28 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        TabView {
-            ExploreView()
-                .tabItem {
-                    Image(systemName: "phone.fill")
-                    Text("Explore")
-                    
-                }
-            MyRecipesView()
-                .tabItem {
-                    Image(systemName: "phone.fill")
-                    Text("My Recipes")
-                    
-                }
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "phone.fill")
-                    Text("Profile")
-                    
-                }
+            TabView {
+                ExploreList()
+                    .tabItem {
+                        Image(systemName: "globe.asia.australia.fill")
+                        Text("Explore")
+                    }
+                MyRecipesView()
+                    .tabItem {
+                        Image(systemName: "menucard.fill")
+                        Text("My Recipes")
+                        
+                    }
+                ProfileView()
+                    .tabItem {
+                        Image(systemName: "person.circle")
+                        Text("Profile")
+                        
+                    }
+            }
         }
-    }
 }
+    
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
