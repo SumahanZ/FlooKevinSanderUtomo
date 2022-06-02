@@ -11,13 +11,13 @@ struct ExploreList: View {
     
     @StateObject var viewModel = ExploreViewmodel()
     
-    @State private var searchText: String = ""
+    @State private var search: String = ""
     
     var filteredRecipes: [Recipe] {
-        if searchText.count == 0 {
+        if search.count == 0 {
             return viewModel.recipes
         }else {
-            return viewModel.recipes.filter {$0.title!.contains(searchText)}
+            return viewModel.recipes.filter {$0.title!.contains(search)}
         }
     }
     
@@ -35,7 +35,15 @@ struct ExploreList: View {
             }
             .padding(.top)
         }
-        .searchable(text: $searchText)
+        .searchable(text: $search)
+        .onSubmit(of: .search, {
+            viewModel.getRecipeBySearch(query: search)
+        })
+        .onChange(of: search, perform: { search in
+            if (search == "") {
+                viewModel.fetchRecipe()
+            }
+        })
         .navigationTitle("Explore Recipes")
         .onAppear {
            viewModel.fetchRecipe()

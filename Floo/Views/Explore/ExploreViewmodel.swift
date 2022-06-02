@@ -27,5 +27,22 @@ class ExploreViewmodel: ObservableObject {
         }
         task.resume()
 }
+    
+    func getRecipeBySearch (query:String) {
+        guard let url = URL(string: "https://api.spoonacular.com/recipes/complexSearch?apiKey=\(apiKey)&query=\(query)&number=10") else { return }
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        guard let data = data else { return }
+            DispatchQueue.main.async { [self] in
+                do {
+                  let result = try JSONDecoder().decode(RecipeAll.self, from: data)
+                    self.recipes = result.recipes
+                } catch let error {
+                    print(error)
+                }
+            }
+
+    }
+    task.resume()
+    }
 }
 
