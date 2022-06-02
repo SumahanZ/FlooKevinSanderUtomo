@@ -84,6 +84,13 @@ struct ProfileView: View {
                 }
                 .padding(.top)
                     
+                    Text("\(viewModel.recipes.count) recipes")
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black)
+                        .padding(.top)
+                        .padding(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         ScrollView(.horizontal) {
                             HStack {
                                 ForEach(viewModel.recipes) {recipe in
@@ -95,7 +102,6 @@ struct ProfileView: View {
                                 }
                             }
                         }
-                        .navigationTitle("\(viewModel.recipes.count)")
                         .onAppear {
                             viewModel.fetchRecipe()
                         }

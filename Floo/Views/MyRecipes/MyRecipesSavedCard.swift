@@ -7,14 +7,13 @@
 
 import SwiftUI
 
-struct MyRecipesCard: View {
+struct MyRecipesSavedCard: View {
     
     var recipe:Recipe
     var body: some View {
         VStack {
             
-            AsyncImage(url: URL(string: recipe.image ?? "")) { image in
-                image
+            Image("sushiroll")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: 164, height: 200)
@@ -38,9 +37,7 @@ struct MyRecipesCard: View {
                         }
                     }
                     .shadow(radius: 5)
-            } placeholder: {
-                ProgressView()
-            }
+            
             Text(recipe.cuisines?[0] ?? "")
                 .fontWeight(.semibold)
     }
@@ -48,8 +45,9 @@ struct MyRecipesCard: View {
    }
 }
 
-struct MyRecipesCard_Previews: PreviewProvider {
+struct MyRecipesSavedCard_Previews: PreviewProvider {
     static var previews: some View {
-        MyRecipesCard(recipe: Recipe())
+        MyRecipesSavedCard(recipe: Recipe())
     }
 }
+

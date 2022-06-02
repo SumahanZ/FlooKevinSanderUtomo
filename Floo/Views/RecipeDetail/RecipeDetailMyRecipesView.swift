@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct RecipeDetailView: View {
+struct RecipeDetailMyRecipesView: View {
     
+    var recipe: Recipe
     @StateObject var viewModel = RecipeDetailViewmodel()
-    var id:Int
     
     var body: some View {
         ScrollView {
         VStack {
-            AsyncImage(url: URL(string: viewModel.recipe.image ?? "")) { image in
+            AsyncImage(url: URL(string: recipe.image ?? "")) { image in
                 image
                     .resizable()
                     .frame(height: nil)
@@ -27,28 +27,28 @@ struct RecipeDetailView: View {
             }
           
             HStack{
-                Text(viewModel.recipe.title ?? "None")
+                Text(recipe.title ?? "None")
                     .font(.system(size: 24))
                     .fontWeight(.bold)
                     .padding([.top, .leading])
                     .frame(maxWidth: .infinity, alignment: .leading)
             
-                Image(systemName: viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id ?? 0) ? "heart.fill" : "heart")
-                        .foregroundColor(viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id ?? 0) ? .red : .black    )
+                Image(systemName: viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0) ? "heart.fill" : "heart")
+                        .foregroundColor(viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0) ? .red : .black    )
                     .padding(.trailing, 20)
                     .padding(.top)
                     .frame(width: 30.0, height: 30.0)
                     .onTapGesture {
-                        if (viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id ?? 0)) {
-                            viewModel.removeRecipeFavorite(recipeId: viewModel.recipe.id ?? 0)
+                        if (viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0)) {
+                            viewModel.removeRecipeFavorite(recipeId: recipe.id ?? 0)
                         } else {
-                            viewModel.addRecipeFavorite(recipeId: viewModel.recipe.id ?? 0)
+                            viewModel.addRecipeFavorite(recipeId: recipe.id ?? 0)
                         }
                     }
 
             }
             
-            Text(viewModel.recipe.summary ?? "None")
+            Text(recipe.summary ?? "None")
                 .font(.body)
                 .fontWeight(.light)
                 .multilineTextAlignment(.leading)
@@ -65,7 +65,7 @@ struct RecipeDetailView: View {
             VStack {
                 HStack {
                     HStack {
-                        Text(String(format: "%.1f",viewModel.recipe.nutrition?.nutrients?[0].amount ?? 0))
+                        Text(String(format: "%.1f",recipe.nutrition?.nutrients?[0].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
@@ -85,7 +85,7 @@ struct RecipeDetailView: View {
                     
                     
                     HStack {
-                        Text(String(format: "%.1f", viewModel.recipe.nutrition?.nutrients?[3].amount ?? 0))
+                        Text(String(format: "%.1f", recipe.nutrition?.nutrients?[3].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
@@ -106,7 +106,7 @@ struct RecipeDetailView: View {
                 .foregroundColor(.white)
                 HStack {
                     HStack {
-                        Text(String(format: "%.1f",viewModel.recipe.nutrition?.nutrients?[8].amount ?? 0))
+                        Text(String(format: "%.1f", recipe.nutrition?.nutrients?[8].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
@@ -125,7 +125,7 @@ struct RecipeDetailView: View {
                     
                     
                     HStack {
-                        Text(String(format: "%.1f", viewModel.recipe.nutrition?.nutrients?[1].amount ?? 0))
+                        Text(String(format: "%.1f", recipe.nutrition?.nutrients?[1].amount ?? 0))
                             .fontWeight(.bold)
                             .padding(.trailing, 5.0)
                         VStack {
@@ -151,7 +151,7 @@ struct RecipeDetailView: View {
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack {
-                ForEach(viewModel.recipe.extendedIngredients ?? [ExtendedIngredient]()) {ingredient in
+                ForEach(recipe.extendedIngredients ?? [ExtendedIngredient]()) {ingredient in
                     Text("\u{2022} \(ingredient.original ?? "")")
                 }
                 
@@ -162,14 +162,12 @@ struct RecipeDetailView: View {
                 
         }
         }
-        .onAppear {
-            viewModel.fetchRecipe(recipeId: id)
-        }
         }
     }
 
-struct RecipeDetailView_Previews: PreviewProvider {
+struct RecipeDetailMyRecipesView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetailView(id: 187)
+        RecipeDetailMyRecipesView(recipe: Recipe())
     }
 }
+

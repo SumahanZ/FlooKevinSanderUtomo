@@ -11,6 +11,7 @@ import Foundation
 class RecipeDetailViewmodel: ObservableObject {
     
     @Published var recipe: Recipe = Recipe()
+   @Published var favRecipeId: [Int] = [Int]()
     
     public func fetchRecipe(recipeId: Int) {
         guard let url = URL(string: "https://api.spoonacular.com/recipes/\(recipeId)/information?apiKey=\(apiKey)&includeNutrition=true") else { return }
@@ -29,6 +30,47 @@ class RecipeDetailViewmodel: ObservableObject {
 
     }
     task.resume()
+    }
+    
+    public func addRecipeFavorite (recipeId: Int) {
+       
+        let decoder = JSONDecoder()
+        if let data = UserDefaults.standard.value(forKey: "favRecipeId") as? Data {
+                    let taskData = try? decoder.decode([Int].self, from: data)
+                    favRecipeId = taskData ?? []
+                } else {
+                    favRecipeId = []
+                }
+        objectWillChange.send()
+        favRecipeId.append(recipeId)
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(favRecipeId) {
+            UserDefaults.standard.set(encoded, forKey: "favRecipeId")
+     }
+    }
+    
+    public func removeRecipeFavorite (recipeId: Int) {
+        let decoder = JSONDecoder()
+        if let data = UserDefaults.standard.value(forKey: "favRecipeId") as? Data {
+                    let taskData = try? decoder.decode([Int].self, from: data)
+                    favRecipeId = taskData ?? []
+                } else {
+                    favRecipeId = []
+                }
+        objectWillChange.send()
+        for (i, id) in favRecipeId.enumerated() {
+            if (id == recipeId) {
+                favRecipeId.remove(at: i)
+            }
+        }
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(favRecipeId) {
+            UserDefaults.standard.set(encoded, forKey: "favRecipeId")
+     }
+    }
+    
+    public func containRecipeFavorite (recipeId: Int) -> Bool {
+        favRecipeId.contains(recipeId)
     }
     
 }

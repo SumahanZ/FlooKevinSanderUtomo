@@ -8,17 +8,21 @@
 import SwiftUI
 
 struct MyRecipesView: View {
+    
+    @StateObject var viewModel = MyRecipesViewmodel()
+    
     var body: some View {
+        NavigationView {
         VStack {
-            HStack{
-            Text("My Recipes")
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.leading)
-                .padding(.leading)
-            Spacer()
-            }
             ScrollView {
+                HStack{
+                Text("My Recipes")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.leading)
+                    .padding(.leading)
+                Spacer()
+                }
             VStack{
                 HStack{
                     Text("Favorites")
@@ -29,9 +33,14 @@ struct MyRecipesView: View {
                 }
                 ScrollView (.horizontal, showsIndicators: false){
                 HStack{
-                    ForEach(0..<5) {i in
-                        MyRecipesCard().padding([.leading, .bottom, .trailing], 10.0)
+                    ForEach(viewModel.favRecipes) {recipe in
+                        NavigationLink {
+                            RecipeDetailView(id: recipe.id ?? -1)
+                        }label: {
+                            MyRecipesCard(recipe: recipe)
+                        }
                     }
+                    
                 }
             }
             }
@@ -46,29 +55,41 @@ struct MyRecipesView: View {
                 }
                 ScrollView (.horizontal, showsIndicators: false){
                 HStack{
-                    ForEach(0..<5) {i in
-                        MyRecipesCard().padding([.leading, .bottom, .trailing], 10.0)
-                            
+                    ForEach(viewModel.myRecipes) {recipe in
+                        NavigationLink {
+                            RecipeDetailMyRecipesView(recipe: recipe)
+                        }label: {
+                            MyRecipesSavedCard(recipe: recipe)
+                        }
                     }
                 }
             }
             }
             
-            Button("Add Recipe") {
-            }
-            .padding(.all, 15.0)
-            .frame(width: 350.0)
-            .foregroundColor(.white)
-            .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color(hue: 0.541, saturation: 0.997, brightness: 1.0)/*@END_MENU_TOKEN@*/)
-            .cornerRadius(10)
-            
-            
+                NavigationLink(destination: AddRecipeView()) {
+                    Button {
+                    } label: {
+                        Text("Add Recipe")
+                    }
+                    .padding(.all, 15.0)
+                    .frame(width: 350.0)
+                    .foregroundColor(.white)
+                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color(hue: 0.541, saturation: 0.997, brightness: 1.0)/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(10)
+
+                }
             Spacer()
         }
         
     }
+        .onAppear {
+            viewModel.loadFavRecipes()
+            viewModel.loadMyRecipes()
+        }
     }
 }
+}
+
 
 struct MyRecipesView_Previews: PreviewProvider {
     static var previews: some View {
