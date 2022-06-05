@@ -42,7 +42,10 @@ class RecipeDetailViewmodel: ObservableObject {
                     favRecipeId = []
                 }
         objectWillChange.send()
+        favRecipeId = Array(Set(favRecipeId))
         favRecipeId.append(recipeId)
+        favRecipeId = Array(Set(favRecipeId))
+        
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(favRecipeId) {
             UserDefaults.standard.set(encoded, forKey: "favRecipeId")
@@ -60,7 +63,9 @@ class RecipeDetailViewmodel: ObservableObject {
         objectWillChange.send()
         for (i, id) in favRecipeId.enumerated() {
             if (id == recipeId) {
+                favRecipeId = Array(Set(favRecipeId))
                 favRecipeId.remove(at: i)
+                favRecipeId = Array(Set(favRecipeId))
             }
         }
         let encoder = JSONEncoder()

@@ -13,6 +13,8 @@ class MyRecipesViewmodel : ObservableObject {
     @Published var favRecipeId: [Int] = [Int]()
     @Published var favRecipes: [Recipe] = []
     
+    
+    
     func loadFavRecipes () {
         var favoriteQuery = ""
         
@@ -39,6 +41,7 @@ class MyRecipesViewmodel : ObservableObject {
                 do {
                   let result = try JSONDecoder().decode([Recipe].self, from: data)
                     self.favRecipes = result
+                    favRecipes = Array(Set(favRecipes))
                 } catch let error {
                     print(error)
                 }

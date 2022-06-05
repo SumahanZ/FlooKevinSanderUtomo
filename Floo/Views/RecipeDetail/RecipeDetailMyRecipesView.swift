@@ -34,7 +34,7 @@ struct RecipeDetailMyRecipesView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             
                 Image(systemName: viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0) ? "heart.fill" : "heart")
-                        .foregroundColor(viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0) ? .red : .black    )
+                        .foregroundColor(viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0) ? .red : .black)
                     .padding(.trailing, 20)
                     .padding(.top)
                     .frame(width: 30.0, height: 30.0)

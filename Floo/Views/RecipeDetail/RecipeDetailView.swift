@@ -10,8 +10,9 @@ import SwiftUI
 struct RecipeDetailView: View {
     
     @StateObject var viewModel = RecipeDetailViewmodel()
-    var id:Int
     
+    @EnvironmentObject var favorites : RecipeDetailViewmodel
+    var id:Int
     var body: some View {
         ScrollView {
         VStack {
@@ -39,10 +40,10 @@ struct RecipeDetailView: View {
                     .padding(.top)
                     .frame(width: 30.0, height: 30.0)
                     .onTapGesture {
-                        if (viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id ?? 0)) {
-                            viewModel.removeRecipeFavorite(recipeId: viewModel.recipe.id ?? 0)
+                        if (viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id!)) {
+                            viewModel.removeRecipeFavorite(recipeId: viewModel.recipe.id!)
                         } else {
-                            viewModel.addRecipeFavorite(recipeId: viewModel.recipe.id ?? 0)
+                            viewModel.addRecipeFavorite(recipeId: viewModel.recipe.id!)
                         }
                     }
 

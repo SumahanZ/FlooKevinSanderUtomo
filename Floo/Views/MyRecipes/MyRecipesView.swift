@@ -87,6 +87,7 @@ struct MyRecipesView: View {
             viewModel.loadMyRecipes()
         }
     }
+        .environmentObject(viewModel)
 }
 }
 
