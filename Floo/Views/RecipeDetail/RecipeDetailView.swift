@@ -10,7 +10,6 @@ import SwiftUI
 struct RecipeDetailView: View {
     
     @StateObject var viewModel = RecipeDetailViewmodel()
-    
     @EnvironmentObject var favorites : RecipeDetailViewmodel
     var id:Int
     var body: some View {
@@ -34,16 +33,18 @@ struct RecipeDetailView: View {
                     .padding([.top, .leading])
                     .frame(maxWidth: .infinity, alignment: .leading)
             
-                Image(systemName: viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id ?? 0) ? "heart.fill" : "heart")
-                        .foregroundColor(viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id ?? 0) ? .red : .black    )
+                Image(systemName: viewModel.isFavorite ? "heart.fill" : "heart")
+                    .foregroundColor(viewModel.isFavorite ? .red : .black    )
                     .padding(.trailing, 20)
                     .padding(.top)
                     .frame(width: 30.0, height: 30.0)
                     .onTapGesture {
-                        if (viewModel.containRecipeFavorite(recipeId: viewModel.recipe.id!)) {
-                            viewModel.removeRecipeFavorite(recipeId: viewModel.recipe.id!)
+                        if viewModel.isFavorite {
+                            viewModel.isFavorite = false
+                            viewModel.removeRecipeFavorite(recipeId: viewModel.recipe.id ??  -1)
                         } else {
-                            viewModel.addRecipeFavorite(recipeId: viewModel.recipe.id!)
+                            viewModel.isFavorite = true
+                            viewModel.addRecipeFavorite(recipeId: viewModel.recipe.id ?? -1)
                         }
                     }
 

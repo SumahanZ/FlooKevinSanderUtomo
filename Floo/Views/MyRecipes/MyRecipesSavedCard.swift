@@ -21,12 +21,6 @@ struct MyRecipesSavedCard: View {
                     .brightness(-0.2)
                     .overlay (alignment: .center) {
                         VStack{
-                            HStack{
-                                Spacer()
-                                Image(systemName: "heart.fill")
-                                    .foregroundColor(.red)
-                                    .padding([.top, .trailing], 10.0)
-                            }
                             Spacer()
                             Text(recipe.title ?? "")
                                 .font(Font.custom("Inter-Thin", size: 20))

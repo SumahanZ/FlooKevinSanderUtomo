@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @StateObject var viewModel = ExploreViewmodel()
-    
+    @StateObject var viewModelDetail = RecipeDetailViewmodel()
     var body: some View {
                 
         VStack {

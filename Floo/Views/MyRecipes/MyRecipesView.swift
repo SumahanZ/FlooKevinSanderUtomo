@@ -10,6 +10,7 @@ import SwiftUI
 struct MyRecipesView: View {
     
     @StateObject var viewModel = MyRecipesViewmodel()
+    @StateObject var viewModelDetail = RecipeDetailViewmodel()
     
     var body: some View {
         NavigationView {
@@ -53,7 +54,7 @@ struct MyRecipesView: View {
                     .padding([.top, .leading])
                 Spacer()
                 }
-                ScrollView (.horizontal, showsIndicators: false){
+                ScrollView (.horizontal){
                 HStack{
                     ForEach(viewModel.myRecipes) {recipe in
                         NavigationLink {
@@ -64,8 +65,7 @@ struct MyRecipesView: View {
                     }
                 }
             }
-            }
-            
+                
                 NavigationLink(destination: AddRecipeView()) {
                     Button {
                     } label: {
@@ -76,8 +76,8 @@ struct MyRecipesView: View {
                     .foregroundColor(.white)
                     .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color(hue: 0.541, saturation: 0.997, brightness: 1.0)/*@END_MENU_TOKEN@*/)
                     .cornerRadius(10)
-
                 }
+            }
             Spacer()
         }
         

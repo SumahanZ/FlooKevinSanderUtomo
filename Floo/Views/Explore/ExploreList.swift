@@ -10,6 +10,7 @@ import SwiftUI
 struct ExploreList: View {
     
     @StateObject var viewModel = ExploreViewmodel()
+    @StateObject var viewModelDetail = RecipeDetailViewmodel()
     
     @State private var search: String = ""
     

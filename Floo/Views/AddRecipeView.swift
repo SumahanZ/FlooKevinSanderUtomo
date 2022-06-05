@@ -18,6 +18,7 @@ struct AddRecipeView: View {
     @State private var amountIngredients: [String] = []
     @State private var nameIngredients: [String] = []
     @State private var unitIngredients: [String] = []
+    @Environment(\.presentationMode) var presentation
     
     
     var body: some View {
@@ -104,6 +105,7 @@ struct AddRecipeView: View {
                                 
                         }
                     }
+                    .padding(.horizontal, 30).padding(.trailing, 20)
                 }
                     Button{
                         unitIngredients.append("")
@@ -121,51 +123,53 @@ struct AddRecipeView: View {
                     .padding(.all, 15.0)
                     
                     
-                    Button{
-                        var myRecipes: [Recipe] = [Recipe]()
-                        var recipe:Recipe = Recipe()
-                        recipe.title = name
-                        recipe.summary = description
-                        recipe.nutrition = Nutrition()
-                        recipe.extendedIngredients = [ExtendedIngredient]()
-                        recipe.nutrition?.nutrients = [Flavonoid]()
-                        recipe.nutrition?.nutrients?[0].amount = Double(calories)
-                        recipe.nutrition?.nutrients?[3].amount = Double(carbo)
-                        recipe.nutrition?.nutrients?[8].amount = Double(protein)
-                        recipe.nutrition?.nutrients?[1].amount = Double(fat)
-                        for (i,ingredient) in nameIngredients.enumerated() {
-                         var ingredientTemp = ExtendedIngredient()
-                            ingredientTemp.name = ingredient
-                            ingredientTemp.unit = unitIngredients[i]
-                            ingredientTemp.amount = Double(amountIngredients[i])
-                            recipe.extendedIngredients?.append(ingredientTemp)
+                        Button(){
+                            var myRecipes: [Recipe] = [Recipe]()
+                            var recipe:Recipe = Recipe()
+                            recipe.title = name
+                            recipe.summary = description
+                            recipe.nutrition = Nutrition()
+                            recipe.extendedIngredients = [ExtendedIngredient]()
+                            recipe.nutrition?.nutrients = [Flavonoid](repeating: Flavonoid(), count: 22)
+                            recipe.nutrition?.nutrients?[0].amount = Double(calories)
+                            recipe.nutrition?.nutrients?[3].amount = Double(carbo)
+                            recipe.nutrition?.nutrients?[8].amount = Double(protein)
+                            recipe.nutrition?.nutrients?[1].amount = Double(fat)
+                            for (i,ingredient) in nameIngredients.enumerated() {
+                             var ingredientTemp = ExtendedIngredient()
+                                ingredientTemp.name = ingredient
+                                ingredientTemp.unit = unitIngredients[i]
+                                ingredientTemp.amount = Double(amountIngredients[i])
+                                recipe.extendedIngredients?.append(ingredientTemp)
+                            }
+                            let decoder = JSONDecoder()
+                            if let data = UserDefaults.standard.value(forKey: "myRecipe") as? Data {
+                                        let taskData = try? decoder.decode([Recipe].self, from: data)
+                                        myRecipes = taskData ?? []
+                                    } else {
+                                        myRecipes = []
+                                    }
+                            var temp = recipe
+                            let id = myRecipes.last?.id ?? 1234567889
+                            temp.id = id + 1
+                            myRecipes.append(temp)
+                            print(temp)
+                            let encoder = JSONEncoder()
+                            if let encoded = try? encoder.encode(myRecipes) {
+                                UserDefaults.standard.set(encoded, forKey: "myRecipe")
+                         }
+                            presentation.wrappedValue.dismiss()
+                        }label : {
+                            Text("Submit Recipe")
                         }
-                        let decoder = JSONDecoder()
-                        if let data = UserDefaults.standard.value(forKey: "myRecipes") as? Data {
-                                    let taskData = try? decoder.decode([Recipe].self, from: data)
-                                    myRecipes = taskData ?? []
-                                } else {
-                                    myRecipes = []
-                                }
-                        myRecipes.append(recipe)
-                        let encoder = JSONEncoder()
-                        if let encoded = try? encoder.encode(myRecipes) {
-                            UserDefaults.standard.set(encoded, forKey: "myRecipes")
-                     }
-
-                        
-                        
-                    }label : {
-                        Text("Submit Recipe")
-                    }
-                    .padding(.all, 15.0)
-                    .frame(maxWidth: 240, alignment: .center)
-                    .font(.system(size: 16))
-                    .foregroundColor(.white)
-                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color(hue: 0.541, saturation: 0.997, brightness: 1.0)/*@END_MENU_TOKEN@*/)
-                    .cornerRadius(10)
-                    .padding(.all, 15.0)
-    
+                        .padding(.all, 15.0)
+                        .frame(maxWidth: 240, alignment: .center)
+                        .font(.system(size: 16))
+                        .foregroundColor(.white)
+                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color(hue: 0.541, saturation: 0.997, brightness: 1.0)/*@END_MENU_TOKEN@*/)
+                        .cornerRadius(10)
+                        .padding(.all, 15.0)
+                    
                 }
                 
             }

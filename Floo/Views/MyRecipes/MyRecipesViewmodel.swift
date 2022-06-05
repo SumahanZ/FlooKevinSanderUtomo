@@ -9,9 +9,9 @@ import Foundation
 
 
 class MyRecipesViewmodel : ObservableObject {
-    @Published var myRecipes: [Recipe] = []
+    @Published var myRecipes: [Recipe] = [Recipe]()
     @Published var favRecipeId: [Int] = [Int]()
-    @Published var favRecipes: [Recipe] = []
+    @Published var favRecipes: [Recipe] = [Recipe]()
     
     
     
@@ -53,7 +53,7 @@ class MyRecipesViewmodel : ObservableObject {
     
     func loadMyRecipes () {
         let decoder = JSONDecoder()
-        if let data = UserDefaults.standard.value(forKey: "myRecipes") as? Data {
+        if let data = UserDefaults.standard.value(forKey: "myRecipe") as? Data {
                     let taskData = try? decoder.decode([Recipe].self, from: data)
                     myRecipes = taskData ?? []
                 } else {

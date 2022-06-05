@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipeDetailMyRecipesView: View {
     
+    @Environment(\.presentationMode) var presentation
     var recipe: Recipe
     @StateObject var viewModel = RecipeDetailViewmodel()
     
@@ -33,18 +34,26 @@ struct RecipeDetailMyRecipesView: View {
                     .padding([.top, .leading])
                     .frame(maxWidth: .infinity, alignment: .leading)
             
-                Image(systemName: viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0) ? "heart.fill" : "heart")
-                        .foregroundColor(viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0) ? .red : .black)
-                    .padding(.trailing, 20)
-                    .padding(.top)
-                    .frame(width: 30.0, height: 30.0)
-                    .onTapGesture {
-                        if (viewModel.containRecipeFavorite(recipeId: recipe.id ?? 0)) {
-                            viewModel.removeRecipeFavorite(recipeId: recipe.id ?? 0)
-                        } else {
-                            viewModel.addRecipeFavorite(recipeId: recipe.id ?? 0)
+                    Button {
+                        viewModel.removeSavedRecipes(recipeId: recipe.id ?? -1)
+                        presentation.wrappedValue.dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "trash.fill")
+                            Text("Remove")
+                                .fontWeight(.semibold)
                         }
                     }
+                    .padding(.all, 15.0)
+                    .foregroundColor(.black)
+                    .background(.white)
+                    .border(Color.blue, width: 2)
+                    .cornerRadius(10)
+                    .padding(.trailing, 15.0)
+                    .padding(.top, 15.0)
+
+                
+
 
             }
             
