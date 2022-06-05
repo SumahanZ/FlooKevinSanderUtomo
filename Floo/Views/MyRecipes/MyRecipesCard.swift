@@ -41,8 +41,6 @@ struct MyRecipesCard: View {
             } placeholder: {
                 ProgressView()
             }
-            Text(recipe.cuisines?[0] ?? "")
-                .fontWeight(.semibold)
     }
 
    }

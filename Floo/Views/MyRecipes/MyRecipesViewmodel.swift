@@ -37,8 +37,8 @@ class MyRecipesViewmodel : ObservableObject {
         guard let data = data else { return }
             DispatchQueue.main.async { [self] in
                 do {
-                  let result = try JSONDecoder().decode(RecipeAll.self, from: data)
-                    self.favRecipes = result.recipes
+                  let result = try JSONDecoder().decode([Recipe].self, from: data)
+                    self.favRecipes = result
                 } catch let error {
                     print(error)
                 }

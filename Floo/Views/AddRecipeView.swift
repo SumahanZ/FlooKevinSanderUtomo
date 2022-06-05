@@ -21,23 +21,14 @@ struct AddRecipeView: View {
     
     
     var body: some View {
+    ScrollView {
         VStack {
-        HStack {
-            Image(systemName: "chevron.left")
-                .foregroundColor(.purple)
-            Text("Back")
-                .fontWeight(.light)
-                .padding(.leading, -5.0)
-        }
-        .padding(.leading)
-        .frame(maxWidth: .infinity, alignment: .leading)
-            
         Text("Add Recipe")
                 .font(.largeTitle)
                 .fontWeight(.semibold)
                 .padding([.top, .leading])
                 .frame(maxWidth: .infinity, alignment: .leading)
-        ScrollView {
+        
             VStack {
                 VStack {
                     Text("General")
@@ -57,10 +48,10 @@ struct AddRecipeView: View {
                 Divider()
                  .padding(.horizontal, 30)
                 
-                TextField("Nationality / Origin", text: $nationality)
-                        .padding(.horizontal, 30).padding([.top, .trailing], 20)
-                Divider()
-                 .padding(.horizontal, 30)
+//                TextField("Nationality / Origin", text: $nationality)
+//                        .padding(.horizontal, 30).padding([.top, .trailing], 20)
+//                Divider()
+//                 .padding(.horizontal, 30)
                 
                 }
                 .padding(.top)
@@ -101,24 +92,16 @@ struct AddRecipeView: View {
                         .fontWeight(.medium)
                         .padding(.leading, 25.0)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    ForEach(0..<amountIngredients.count) {i in
+                    ForEach(0..<amountIngredients.count, id: \.self) {i in
                     HStack {
                         TextField("Ingredient \(i+1)", text: $nameIngredients[i])
-                                .padding(.trailing, 30).padding(.trailing, 20).frame(width: 200.0)
-                        Divider()
-                                .padding(.trailing, 30)
-                                .frame(width: 200.0)
+                            .padding(.leading, 20.0)
                         VStack {
                         TextField("Amount", text: $amountIngredients[i])
-                                .padding(.trailing, 30).padding(.trailing, 20).frame(width: 120.0).font(/*@START_MENU_TOKEN@*/.footnote/*@END_MENU_TOKEN@*/)
-                        Divider()
-                                .padding(.trailing, 30)
-                            .frame(width: 120.0)
+                           .font(/*@START_MENU_TOKEN@*/.footnote/*@END_MENU_TOKEN@*/)
                         TextField("Unit", text: $unitIngredients[i])
-                                .padding(.trailing, 30).padding(.trailing, 20).frame(width: 120.0).font(/*@START_MENU_TOKEN@*/.footnote/*@END_MENU_TOKEN@*/)
-                        Divider()
-                                .padding(.trailing, 30)
-                            .frame(width: 120.0)
+                           .font(/*@START_MENU_TOKEN@*/.footnote/*@END_MENU_TOKEN@*/)
+                                
                         }
                     }
                 }
@@ -143,10 +126,8 @@ struct AddRecipeView: View {
                         var recipe:Recipe = Recipe()
                         recipe.title = name
                         recipe.summary = description
-                        recipe.cuisines = [String]()
                         recipe.nutrition = Nutrition()
                         recipe.extendedIngredients = [ExtendedIngredient]()
-                        recipe.cuisines?[0] = nationality
                         recipe.nutrition?.nutrients = [Flavonoid]()
                         recipe.nutrition?.nutrients?[0].amount = Double(calories)
                         recipe.nutrition?.nutrients?[3].amount = Double(carbo)

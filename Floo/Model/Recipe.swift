@@ -9,3 +9,7 @@ import Foundation
 struct RecipeAll: Codable {
     let recipes: [Recipe]
 }
+
+struct RecipeByQuery: Codable {
+    var results: [Recipe]
+}
