@@ -16,14 +16,14 @@ struct MyRecipesView: View {
         NavigationView {
         VStack {
             ScrollView {
-                HStack{
-                Text("My Recipes")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.leading)
-                    .padding(.leading)
-                Spacer()
-                }
+//                HStack{
+//                Text("My Recipes")
+//                    .font(.largeTitle)
+//                    .fontWeight(.bold)
+//                    .multilineTextAlignment(.leading)
+//                    .padding(.leading)
+//                Spacer()
+//                }
             VStack{
                 HStack{
                     Text("Favorites")
@@ -80,12 +80,12 @@ struct MyRecipesView: View {
             }
             Spacer()
         }
-        
+            .navigationTitle("My Recipes")
+            .onAppear {
+                viewModel.loadFavRecipes()
+                viewModel.loadMyRecipes()
+            }
     }
-        .onAppear {
-            viewModel.loadFavRecipes()
-            viewModel.loadMyRecipes()
-        }
     }
         .environmentObject(viewModel)
 }

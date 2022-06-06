@@ -168,6 +168,21 @@ struct RecipeDetailMyRecipesView: View {
             .padding([.top, .leading, .trailing], 5.0)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity, alignment: .center)
+            
+            Text("Steps")
+                .font(.title2)
+                .fontWeight(.semibold)
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            VStack {
+                ForEach(viewModel.recipe.analyzedInstructions?[0].steps ?? [Step](), id: \.self) {step in
+                    Text("\u{2022} \(step.step ?? "")")
+                }
+                
+            }
+            .padding([.top, .leading, .trailing], 5.0)
+            .multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, alignment: .center)
                 
         }
         }

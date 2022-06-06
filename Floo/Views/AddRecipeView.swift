@@ -18,6 +18,7 @@ struct AddRecipeView: View {
     @State private var amountIngredients: [String] = []
     @State private var nameIngredients: [String] = []
     @State private var unitIngredients: [String] = []
+    @State private var steps: [String] = []
     @Environment(\.presentationMode) var presentation
     
     
@@ -122,6 +123,33 @@ struct AddRecipeView: View {
                     .cornerRadius(10)
                     .padding(.all, 15.0)
                     
+                    Text("Steps")
+                        .font(.title)
+                        .fontWeight(.medium)
+                        .padding(.leading, 25.0)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    ForEach(0..<steps.count, id: \.self) {i in
+                    HStack {
+                        TextField("Step \(i+1)", text: $steps[i])
+                            .padding(.leading, 20.0)
+                        }
+                    }
+                    .padding(.horizontal, 30).padding(.trailing, 20)
+                }
+                    Button{
+                        steps.append("")
+                    }label : {
+                        Text("Add More Steps")
+                    }
+                    .padding(.all, 15.0)
+                    .frame(maxWidth: 240, alignment: .center)
+                    .font(.system(size: 16))
+                    .foregroundColor(.white)
+                    .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color(hue: 0.541, saturation: 0.997, brightness: 1.0)/*@END_MENU_TOKEN@*/)
+                    .cornerRadius(10)
+                    .padding(.all, 15.0)
+                    
                     
                         Button(){
                             var myRecipes: [Recipe] = [Recipe]()
@@ -131,6 +159,8 @@ struct AddRecipeView: View {
                             recipe.nutrition = Nutrition()
                             recipe.extendedIngredients = [ExtendedIngredient]()
                             recipe.nutrition?.nutrients = [Flavonoid](repeating: Flavonoid(), count: 22)
+                            recipe.analyzedInstructions = [AnalyzedInstruction](repeating: AnalyzedInstruction(), count: 1)
+                            recipe.analyzedInstructions?[0].steps = [Step]()
                             recipe.nutrition?.nutrients?[0].amount = Double(calories)
                             recipe.nutrition?.nutrients?[3].amount = Double(carbo)
                             recipe.nutrition?.nutrients?[8].amount = Double(protein)
@@ -141,6 +171,12 @@ struct AddRecipeView: View {
                                 ingredientTemp.unit = unitIngredients[i]
                                 ingredientTemp.amount = Double(amountIngredients[i])
                                 recipe.extendedIngredients?.append(ingredientTemp)
+                            }
+                            
+                            for step in steps {
+                             var temp = Step()
+                                temp.step = step
+                                recipe.analyzedInstructions?[0].steps?.append(temp)
                             }
                             let decoder = JSONDecoder()
                             if let data = UserDefaults.standard.value(forKey: "myRecipe") as? Data {
@@ -177,7 +213,7 @@ struct AddRecipeView: View {
             
         }
     }
-}
+
 
 struct AddRecipeView_Previews: PreviewProvider {
     static var previews: some View {

@@ -93,7 +93,7 @@ struct ProfileView: View {
                                     NavigationLink {
                                         RecipeDetailMyRecipesView(recipe: recipe)
                                     }label: {
-                                        MyRecipesCard(recipe: recipe)
+                                        MyRecipesSavedCard(recipe: recipe)
                                     }
                                 }
                             }
