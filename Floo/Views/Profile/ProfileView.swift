@@ -72,7 +72,7 @@ struct ProfileView: View {
                     }
                 VStack(alignment: .leading, spacing: 6) {
                     ForEach(user.user.speciality , id: \.self) {speciality in
-                        Text("-" + speciality).padding(.horizontal, 10).padding(.top,3)
+                        Text("\u{2022}" + speciality).padding(.horizontal, 10).padding(.top,3)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

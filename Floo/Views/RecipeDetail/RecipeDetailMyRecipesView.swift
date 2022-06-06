@@ -165,8 +165,8 @@ struct RecipeDetailMyRecipesView: View {
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack {
-                ForEach(recipe.extendedIngredients ?? [ExtendedIngredient](), id: \.self) {ingredient in
-                    Text("\u{2022} \(String(ingredient.amount ?? 1)) \(ingredient.unit ?? "") \(ingredient.name ?? "")")
+                ForEach(Array((recipe.extendedIngredients ?? [ExtendedIngredient]()).enumerated()), id: \.offset) {i,ingredient in
+                    Text("\(String(ingredient.amount ?? 1)) \(ingredient.unit ?? "") \(ingredient.name ?? "")")
                 }
                 
             }
@@ -180,7 +180,7 @@ struct RecipeDetailMyRecipesView: View {
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack {
-                ForEach(recipe.analyzedInstructions?[0].steps ?? [Step](), id: \.self) {step in
+                ForEach(Array((recipe.analyzedInstructions?[0].steps ?? [Step]()).enumerated()), id: \.offset) {i,step in
                     Text("\u{2022} \(step.step ?? "")")
                 }
                 
