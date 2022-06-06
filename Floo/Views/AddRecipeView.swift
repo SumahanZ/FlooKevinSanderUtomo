@@ -15,10 +15,10 @@ struct AddRecipeView: View {
     @State private var carbo:String = ""
     @State private var protein:String = ""
     @State private var fat:String = ""
-    @State private var amountIngredients: [String] = []
-    @State private var nameIngredients: [String] = []
-    @State private var unitIngredients: [String] = []
-    @State private var steps: [String] = []
+    @State private var amountIngredients: [String] = [""]
+    @State private var nameIngredients: [String] = [""]
+    @State private var unitIngredients: [String] = [""]
+    @State private var steps: [String] = [""]
     @Environment(\.presentationMode) var presentation
     
     

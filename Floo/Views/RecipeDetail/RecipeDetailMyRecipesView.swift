@@ -16,17 +16,22 @@ struct RecipeDetailMyRecipesView: View {
     var body: some View {
         ScrollView {
         VStack {
-            AsyncImage(url: URL(string: recipe.image ?? "")) { image in
-                image
-                    .resizable()
-                    .frame(height: nil)
-                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
-                    .cornerRadius(20)
-                    .padding(5)
-            } placeholder: {
-                ProgressView()
-            }
-          
+//            AsyncImage(url: URL(string: recipe.image ?? "")) { image in
+//                image
+//                    .resizable()
+//                    .frame(height: nil)
+//                    .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
+//                    .cornerRadius(20)
+//                    .padding(5)
+//            } placeholder: {
+//                ProgressView()
+//            }
+            Image("recipe")
+                .resizable()
+                .frame(height: nil)
+                .aspectRatio(contentMode: /*@START_MENU_TOKEN@*/.fit/*@END_MENU_TOKEN@*/)
+                .cornerRadius(20)
+                .padding(5)
             HStack{
                 Text(recipe.title ?? "None")
                     .font(.system(size: 24))
@@ -160,8 +165,8 @@ struct RecipeDetailMyRecipesView: View {
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack {
-                ForEach(recipe.extendedIngredients ?? [ExtendedIngredient]()) {ingredient in
-                    Text("\u{2022} \(ingredient.original ?? "")")
+                ForEach(recipe.extendedIngredients ?? [ExtendedIngredient](), id: \.self) {ingredient in
+                    Text("\u{2022} \(String(ingredient.amount ?? 1)) \(ingredient.unit ?? "") \(ingredient.name ?? "")")
                 }
                 
             }
@@ -175,7 +180,7 @@ struct RecipeDetailMyRecipesView: View {
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity, alignment: .leading)
             VStack {
-                ForEach(viewModel.recipe.analyzedInstructions?[0].steps ?? [Step](), id: \.self) {step in
+                ForEach(recipe.analyzedInstructions?[0].steps ?? [Step](), id: \.self) {step in
                     Text("\u{2022} \(step.step ?? "")")
                 }
                 

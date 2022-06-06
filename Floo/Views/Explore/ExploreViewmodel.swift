@@ -7,7 +7,7 @@
 
 import Foundation
 
-var apiKey = "587cfa84592f4b25aa9de1c37765d72c"
+var apiKey = "308a67cc457b41d48d54130b834efa63"
 class ExploreViewmodel: ObservableObject {
     @Published var recipes: [Recipe] = []
     
