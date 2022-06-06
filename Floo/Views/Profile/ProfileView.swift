@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @StateObject var viewModel = ExploreViewmodel()
+    @StateObject var viewModel = MyRecipesViewmodel()
     @StateObject var viewModelDetail = RecipeDetailViewmodel()
+    @StateObject var user = ProfileViewmodel()
     var body: some View {
-                
-        VStack {
+        NavigationView {
+            VStack {
         ZStack {
             Image("recipe")
                 .resizable()
@@ -24,19 +25,18 @@ struct ProfileView: View {
                     .clipShape(Circle())
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 146.0, height: 146.0)
-                Text("Kenny Jinhiro")
+                Text(user.user.name )
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .padding(.top, -10.0)
-                Text("Home Chef")
+                Text(user.user.title )
                     .font(.headline)
                     .foregroundColor(.white)
                 
             }
         }
             VStack {
-                NavigationView {
                 ScrollView {
                 Text("Profile Information")
                     .font(.title3)
@@ -56,12 +56,11 @@ struct ProfileView: View {
                     Spacer()
                     }
                         
-                    Text("After attending computer science school, I am interested in cooking food especially Indian food. Prata bread and butter chicken are my favourite foods")
-                        .font(.body)
+                    Text(user.user.description)
                         .fontWeight(.light)
-                        .multilineTextAlignment(.leading)
+                        .padding(.horizontal, 10)
                         .padding(.top, 2.0)
-                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 
                 VStack {
                     HStack {
@@ -71,20 +70,17 @@ struct ProfileView: View {
                         .padding(.leading, 10.0)
                     Spacer()
                     }
-                VStack {
-                    HStack {
-                    Text("Butter Chicken, Fish Curry, Kofta, Prata Bread")
-                        .font(.body)
-                        .fontWeight(.light)
-                        .padding(.top, 2.0)
-                        .padding([.leading], 10.0)
-                    Spacer()
+                VStack(alignment: .leading, spacing: 6) {
+                    ForEach(user.user.speciality , id: \.self) {speciality in
+                        Text("-" + speciality).padding(.horizontal, 10).padding(.top,3)
                     }
                 }
-                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                    
+            }
                 .padding(.top)
                     
-                    Text("\(viewModel.recipes.count) recipes")
+                    Text("\(viewModel.myRecipes.count) recipes")
                         .font(.title2)
                         .fontWeight(.semibold)
                         .foregroundColor(.black)
@@ -93,22 +89,35 @@ struct ProfileView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                         ScrollView(.horizontal) {
                             HStack {
-                                ForEach(viewModel.recipes) {recipe in
+                                ForEach(viewModel.myRecipes) {recipe in
                                     NavigationLink {
-                                        RecipeDetailView(id: recipe.id ?? -1)
+                                        RecipeDetailMyRecipesView(recipe: recipe)
                                     }label: {
-                                        ProfileRecipeCard(recipe: recipe)
+                                        MyRecipesCard(recipe: recipe)
                                     }
                                 }
                             }
                         }
                         .onAppear {
-                            viewModel.fetchRecipe()
+                            viewModel.loadMyRecipes()
+                            user.loadUserData()
                         }
+                    NavigationLink(destination: ProfileEditView(user: $user.user)) {
+                        Button {
+                        } label: {
+                            Text("Edit Profile")
+                        }
+                        .padding(.all, 15.0)
+                        .frame(width: 350.0)
+                        .foregroundColor(.white)
+                        .background(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=View@*/Color(hue: 0.541, saturation: 0.997, brightness: 1.0)/*@END_MENU_TOKEN@*/)
+                        .cornerRadius(10)
+                    }
+                    
                 
           }
       }
-                }
+                
             
              
             .background(Color.white.edgesIgnoringSafeArea(.bottom))
@@ -116,7 +125,8 @@ struct ProfileView: View {
             .offset(y: -65)
             .ignoresSafeArea()
             }
-        }
+    
+    }
     }
 }
 
@@ -124,4 +134,5 @@ struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
     }
+}
 }

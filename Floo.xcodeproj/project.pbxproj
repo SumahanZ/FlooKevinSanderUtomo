@@ -34,6 +34,8 @@
 		3E3D7FA82842A73F00FF6877 /* Chef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D7FA72842A73F00FF6877 /* Chef.swift */; };
 		3E43A7E328452A8A00BD4B4E /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E43A7E228452A8A00BD4B4E /* Recipe.swift */; };
 		3E47725C283BCCCF00F8E02E /* ExploreCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47725B283BCCCF00F8E02E /* ExploreCard.swift */; };
+		3E547770284DB45F009EF812 /* ProfileViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E54776F284DB45F009EF812 /* ProfileViewmodel.swift */; };
+		3E547772284DBC54009EF812 /* ProfileEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E547771284DBC54009EF812 /* ProfileEditView.swift */; };
 		3E66719F2847DF450005BC98 /* RecipeDetailMyRecipesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E66719E2847DF450005BC98 /* RecipeDetailMyRecipesView.swift */; };
 		3EE2EC2B283E5FF600589391 /* ProfileRecipeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE2EC2A283E5FF600589391 /* ProfileRecipeCard.swift */; };
 /* End PBXBuildFile section */
@@ -68,6 +70,8 @@
 		3E3D7FA72842A73F00FF6877 /* Chef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chef.swift; sourceTree = "<group>"; };
 		3E43A7E228452A8A00BD4B4E /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		3E47725B283BCCCF00F8E02E /* ExploreCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreCard.swift; sourceTree = "<group>"; };
+		3E54776F284DB45F009EF812 /* ProfileViewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewmodel.swift; sourceTree = "<group>"; };
+		3E547771284DBC54009EF812 /* ProfileEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileEditView.swift; sourceTree = "<group>"; };
 		3E66719E2847DF450005BC98 /* RecipeDetailMyRecipesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailMyRecipesView.swift; sourceTree = "<group>"; };
 		3EE2EC2A283E5FF600589391 /* ProfileRecipeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRecipeCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,6 +200,8 @@
 			children = (
 				3EE2EC2A283E5FF600589391 /* ProfileRecipeCard.swift */,
 				040E003028280C0700524A57 /* ProfileView.swift */,
+				3E54776F284DB45F009EF812 /* ProfileViewmodel.swift */,
+				3E547771284DBC54009EF812 /* ProfileEditView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -281,8 +287,10 @@
 			files = (
 				3E3D7F9E2842539700FF6877 /* ExploreViewmodel.swift in Sources */,
 				3E3D7FA6284267A500FF6877 /* RecipeDetailViewmodel.swift in Sources */,
+				3E547772284DBC54009EF812 /* ProfileEditView.swift in Sources */,
 				040E003328280C1900524A57 /* AddRecipeView.swift in Sources */,
 				3E1BB8912848CB9200DDBA3B /* MyRecipesSavedCard.swift in Sources */,
+				3E547770284DB45F009EF812 /* ProfileViewmodel.swift in Sources */,
 				3E327E9628332C9F008FB912 /* MyRecipesCard.swift in Sources */,
 				040E001E2827E8F600524A57 /* ContentView.swift in Sources */,
 				040E0038282E915200524A57 /* RecipeAll.swift in Sources */,
